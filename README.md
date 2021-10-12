@@ -1,11 +1,12 @@
 ## Page Admin
 Email : rmangunsong@example.net
+<br>
 password : password
 
 jangan lupa isi email untuk mengirim notifikasi email ketika ada berita terbaru ke subscriber
 - masuk kefile env
 - scrol kebawah sampai menemui MAIL_MAILER
-- isikan email dan password ada sesuai yang sudah saya commen
+- isikan email dan password anda sesuai yang sudah saya commen
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 

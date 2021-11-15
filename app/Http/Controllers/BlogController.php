@@ -48,8 +48,10 @@ class BlogController extends Controller
         $tags       = Tags::all();
         $blogLimit  = Blog::limit(6)->get();
         $groupDate  = Blog::archives();
+        $count      = Likes::where('blog_id', $blog->id)->get();
+        $countLike  = $count->count();
 
-        return view('detail_blog', compact('blog', 'title', 'categori', 'blogLimit', 'groupDate', 'tags'));
+        return view('detail_blog', compact('blog', 'title', 'categori', 'blogLimit', 'groupDate', 'tags', 'countLike'));
     }
 
     public function likeBlog(Request $request)

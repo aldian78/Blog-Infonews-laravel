@@ -32,10 +32,10 @@
                                         <input type="hidden" name="blog_id" value="{{ $blog['id'] }}"> 
                                         @forelse ($blog['like'] as $check)
                                             @if(Request::ip() == $check->ip_address || $blog['id'] == $check->blog_id)
-                                                <i class="far fa-thumbs-up active" style="cursor: pointer" id="likes"></i> 50
+                                                <i class="far fa-thumbs-up active" style="cursor: pointer" id="likes"></i> {{ $countLike }}
                                             @endif
                                         @empty
-                                                <i class="far fa-thumbs-up" style="cursor: pointer" id="likes"></i> 50
+                                                <i class="far fa-thumbs-up" style="cursor: pointer" id="likes"></i> {{ $countLike }}
                                             {{-- @endif --}}
                                         @endforelse
                                     </form>

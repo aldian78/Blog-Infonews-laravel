@@ -17,7 +17,6 @@
         "laravel/framework": "^8.54",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "gd": "*",
         "ext-gd": "*"
     },
     "require-dev": {

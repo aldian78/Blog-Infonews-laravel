@@ -73,10 +73,12 @@ class Blog extends Model
 
     public function scopeArchives($query)
     {
-        return $query->selectRaw('year(created_at) year, month(created_at) month, count(*) total')
-            ->groupBy('year', 'month')
-            ->orderByRaw('min(created_at) desc')
-            ->get();
+        if ($query != null) {
+            return $query->selectRaw('year(created_at) year, month(created_at) month, count(*) total')
+                ->groupBy('year', 'month')
+                ->orderByRaw('min(created_at) desc')
+                ->get();
+        }
     }
 
     // jika route memakai resource dan ingin mencari slug maka pakai ini

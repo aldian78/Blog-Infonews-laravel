@@ -16,7 +16,7 @@
                         {{-- @foreach($blog as $blogs) --}}
     					<div class="content-detail-blog">
                             @if($blog->image)
-                                <img src="{{ asset('storage/' . $blog->image) }}" class="img-detail-blog" alt="{{ $blog->categori->name }}">
+                                <img src="{{ asset($blog->image) }}" class="img-detail-blog" alt="{{ $blog->categori->name }}">
                             @else
                                 <img src="https://source.unsplash.com/400x200?{{ $blog->categori->name }}" class="card-img">
                             @endif
@@ -87,13 +87,13 @@
                    @foreach($blogLimit as $limit)
                     <div class="flex-rencent-post">
                         @if($limit->image)
-                            <img src="{{ asset('storage/' . $limit->image) }}" alt="{{ $limit->categori->name }}">
+                            <img src="{{ asset($limit->image) }}" alt="{{ $limit->categori->name }}">
                         @else
                             <img src="https://source.unsplash.com/400x200?{{ $limit->categori->name }}" class="card-img">
                         @endif
                         <div class="recent-post-blog">
                             <p class="mb-0" style="font-weight:600; color:#000000;">{{ $limit->judul }}</p>
-                            <p class="mb-1">{{ Str::limit($limit->content, 50, '...') }} </p>
+                            <p class="mb-1">{!! Str::limit($limit->content, 50, '...') !!} </p>
                             <a href="/blog/detail/{{ $limit->slug }}" class="read-rencent-post">Read more...</a>
                         </div>
                     </div>

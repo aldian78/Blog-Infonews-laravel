@@ -80,7 +80,7 @@
                           <label for="image">Image</label>
                           <div class="row">
                             @if($blog->image)
-                              <img src="{{ asset('storage/' . $blog->image) }}" class="img-preview img-fluid mb-3 col-sm-3">
+                              <img src="{{ asset($blog->image) }}" class="img-preview img-fluid mb-3 col-sm-3">
                             @else
                               <img class="img-preview img-fluid mb-3 col-sm-3">
                             @endif

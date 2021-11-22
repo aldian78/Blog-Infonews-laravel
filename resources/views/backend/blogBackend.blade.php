@@ -59,10 +59,15 @@
                             <a href="/blogs/{{ $blogback->slug }}" class="btn btn-warning">
                               <i class="fas fa-eye" style="color: white"></i>
                             </a>
-                            <a href="/blogs/{{ $blogback->slug }}/edit" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
+                            <a href="/blogs/{{ $blogback->slug }}/edit" class="btn btn-primary">
+                              <i class="fas fa-pencil-alt"></i>
+                            </a>
                             <button class="btn btn-danger" type="submit" data-toggle="modal" data-target="#modal-delete{{ $blogback->slug }}">
                               <i class="fas fa-trash-alt"></i>
                             </button>
+                            <a href="/blogs/mailBlogs/{{ $blogback->slug }}" class="btn btn-success">
+                              <i class="fas fa-paper-plane"></i>
+                            </a>
                           </td>
                         </tr>
                         @endforeach

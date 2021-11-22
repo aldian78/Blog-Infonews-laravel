@@ -241,23 +241,26 @@
         });
 
         //Fetch API Javascript 
-        // const title = document.querySelector('#hastag');
-        // const slug = document.querySelector('#slug');
-        
-        // title.addEventListener('change', function() {
-        //     fetch('/hastags/checkSlug?title=' + title.value)
-        //     .then(response => response.json())
-        //     .then(data => slug.value = data.slug)
-        // });
-    </script>
-    <script>
-        const title = document.querySelector('#namaTags');
-        const slug = document.querySelector('#slugTags');
+        //create slug
+        const title = document.querySelector('#hastag');
+        const slug = document.querySelector('#slug');
         
         title.addEventListener('change', function() {
             fetch('/hastags/checkSlug?title=' + title.value)
             .then(response => response.json())
             .then(data => slug.value = data.slug)
+        });
+
+    </script>
+    <script>
+      //change slug
+      const titlechange = document.querySelector('#namaTags');
+        const slugchange = document.querySelector('#slugTags');
+        
+        titlechange.addEventListener('change', function() {
+            fetch('/hastags/checkSlug?title=' + titlechange.value)
+            .then(response => response.json())
+            .then(data => slugchange.value = data.slug)
         });
     </script>
 @endpush

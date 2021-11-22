@@ -30,6 +30,6 @@ class BlogEmail extends Mailable
     {
         return $this->from('projectsaya1997@gmail.com', 'InfoNews')
             ->subject('News Blog')
-            ->markdown('email.blogEmail');
+            ->markdown('emails.testMail');
     }
 }

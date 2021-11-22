@@ -4,7 +4,7 @@
 <h2>{{ $details['title'] }}</h2>
 <p class="mb-2 mt-2">{{ $details['body'] }}</p>
 
-<img src="{{ $details->embedData(asset('storage/blogs-images/'.$details['image'])) }}">
+<img src="{{ $details['image'] }}">
     
 @endcomponent
 <p class="mt-3">{{ $details['description'] }}</p>

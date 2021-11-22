@@ -33,7 +33,7 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-center my-2">
                       @if($blog->image)
-                        <img src="{{ asset('storage/' . $blog->image) }}" class="img-fluid pad mb-3" width="600" height="600">
+                        <img src="{{ asset($blog->image) }}" class="img-fluid pad mb-3" width="600" height="600">
                       @else
                         <img src="https://source.unsplash.com/600x600?{{ $blog->categori->name }}" class="img-fluid pad mb-3" width="600" height="600">
                       @endif

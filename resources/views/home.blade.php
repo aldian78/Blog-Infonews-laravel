@@ -46,7 +46,7 @@
                             <div class="card">
                                 <div class="label">{{ $blogs->categori->nama }}</div>
                                     @if($blogs->image)
-                                        <img src="{{ asset('storage/' . $blogs->image) }}" class="card-img" alt="{{ $blogs->categori->name }}">
+                                        <img src="{{ asset($blogs->image) }}" class="card-img" alt="{{ $blogs->categori->name }}">
                                     @else
                                         <img src="https://source.unsplash.com/400x200?{{ $blogs->categori->name }}" class="card-img">
                                     @endif

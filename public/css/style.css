@@ -1185,6 +1185,7 @@ input:-webkit-autofill {
     .contact .contact-maps {
         width: 50%;
         position: relative;
+        overflow: hidden;
     }
 
     .contact .contact-maps .content-maps {

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\ContactEmail;
 use App\Models\Contact;
 use App\Mail\SendEmail;
+use App\Models\Blog;
 use Illuminate\Support\Facades\Mail;
 
 class SendEmailController extends Controller

@@ -18,7 +18,7 @@
                                 <div class="card">
                                     <div class="label">{{ $posts->categori->nama }}</div>
                                     @if($posts->image)
-                                        <img src="{{ asset('storage/' . $posts->image) }}" class="card-img-top" alt="{{ $posts->categori->name }}">
+                                        <img src="{{ asset($posts->image) }}" class="card-img-top" alt="{{ $posts->categori->name }}">
                                     @else
                                         <img src="https://source.unsplash.com/400x200?{{ $posts->categori->name }}" class="card-img">
                                     @endif
@@ -74,7 +74,7 @@
                     @foreach($blogLimit as $limit)
                     <div class="flex-rencent-post">
                         @if($limit->image)
-                            <img src="{{ asset('storage/' . $limit->image) }}" alt="{{ $blogs->categori->name }}">
+                            <img src="{{ asset($limit->image) }}" alt="{{ $limit->categori->name }}">
                         @else
                             <img src="https://source.unsplash.com/400x200?{{ $limit->categori->name }}" class="card-img">
                         @endif

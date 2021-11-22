@@ -74,4 +74,5 @@ Route::post('/subscribe/store', [DashboardController::class, 'storeSubscribe']);
 Route::delete('/subscribe/{id}', [DashboardController::class, 'destroySubscribe']);
 
 Route::get('/sendEmail/{id}', [SendEmailController::class, 'sendContact'])->middleware('auth');
+Route::get('/blogs/mailBlogs/{blog:slug}', [BlogsController::class, 'sendMailBlog'])->middleware('auth');
 // END BACKEND

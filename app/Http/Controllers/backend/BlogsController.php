@@ -4,23 +4,20 @@ namespace App\Http\Controllers\backend;
 
 use App\Models\Blog;
 use App\Models\Tags;
-use App\Models\Categori;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Mail\BlogEmail;
+use App\Models\Categori;
 use App\Models\Subscribers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 use \Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
-use Illuminate\Support\Facades\Mail;
 
 class BlogsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $title = 'Dashboard';
@@ -29,11 +26,6 @@ class BlogsController extends Controller
         return view('backend.blogBackend',  compact('title', 'blog'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         $title      = 'Create New Blog';
@@ -42,12 +34,6 @@ class BlogsController extends Controller
         return view('backend.create_blogs', compact('title', 'categori', 'tags'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -67,13 +53,18 @@ class BlogsController extends Controller
             $image = $request->file('image');
             $input['file'] = time() . '.' . $image->getClientOriginalExtension();
 
-            $destinationPath =  public_path('storage/blogs-image');
+            // untuk hosting berbayar lebih baik menggunakan simpan gambar difolder storage yg sudah disymlink difolder public
+            // $destinationPath =  public_path('storage/blogs-image');
+
+            //untuk hosting gratisan simpan gambar dipublic
+            $destinationPath =  public_path('image-blogs');
 
             $imgFile = Image::make($image->getRealPath());
 
             //width 750 height 500
             $imgFile->resize(750, 500)->save($destinationPath . '/' . $input['file']);
-            $validated->image = 'blogs-image/' . $input['file'];
+
+            $validated->image = 'image-blogs/' . $input['file'];
         }
 
         $validated->user_id = auth()->user()->id;
@@ -82,35 +73,34 @@ class BlogsController extends Controller
         //untuk menambah dari table yg berelasi belongsToMany (banyak ke banyak) bisa disebut pivot 
         $validated->tags()->attach($request['tags']);
 
-        $this->sendEmail($validated);
+        // $this->sendEmail($validated);
 
         // // Blog::create($validated);
         return redirect('blogs')->with('success', 'Blogs berhasil ditambahkan');
     }
 
-    public function sendEmail($validated)
+    public function sendMailBlog(blog $blog)
     {
-        $sendEmail = Subscribers::all();
-        if ($sendEmail != null) {
+
+        $followers = Subscribers::all();
+        if ($followers != null) {
             $details = [
                 'title'       => 'InfoNews',
-                'body'        => $validated->judul,
+                'body'        => $blog->judul,
                 'description' => 'Jika penasaran yuk klik tombol dibawah ini',
-                'image'       => $validated->image,
-                'slug'        => $validated->slug
+                'image'       => URL::to('/') . '/' . $blog->image,
+                'slug'        => $blog->slug,
+                'url'         => URL::to('/')
             ];
-            foreach ($sendEmail as $email) {
+
+            foreach ($followers as $email) {
                 Mail::to($email->email)->send(new BlogEmail($details));
             }
+
+            return redirect('blogs')->with('success', 'Berita baru berhasil dikirim email ke subscribers');
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Blog  $blog
-     * @return \Illuminate\Http\Response
-     */
     public function show(Blog $blog)
     {
         $title = 'Detail Blog';
@@ -120,12 +110,6 @@ class BlogsController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Blog  $blog
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Blog $blog)
     {
         if ($blog->user_id !== auth()->user()->id) {
@@ -138,13 +122,6 @@ class BlogsController extends Controller
         return view('backend.update_blogs', compact('title', 'categori', 'blog', 'tagging'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Blog  $blog
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Blog $blog)
     {
         $rules = [
@@ -173,13 +150,17 @@ class BlogsController extends Controller
             $image = $request->file('image');
             $input['file'] = time() . '.' . $image->getClientOriginalExtension();
 
-            $destinationPath =  public_path('storage/blogs-image');
+            // untuk hosting berbayar lebih baik menggunakan simpan gambar difolder storage yg sudah disymlink difolder public
+            // $destinationPath =  public_path('storage/blogs-image');
+
+            //untuk hosting gratisan simpan gambar dipublic
+            $destinationPath =  public_path('image-blogs');
 
             $imgFile = Image::make($image->getRealPath());
 
             //width 750 height 500
             $imgFile->resize(750, 500)->save($destinationPath . '/' . $input['file']);
-            $validated->image = 'blogs-image/' . $input['file'];
+            $validated->image = 'image-blogs/' . $input['file'];
         }
 
         $validated->user_id = auth()->user()->id;
@@ -197,17 +178,16 @@ class BlogsController extends Controller
         return redirect('blogs')->with('update', 'Blogs berhasil diupdate');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Blog  $blog
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Blog $blog)
     {
-        //delete gambar lama
+        //delete gambar lama && untuk hosting berbayar
+        // if ($blog->image) {
+        //     Storage::delete($blog->image);
+        // }
+
+        //menghapus gambar difolder public untuk hosting gratisan
         if ($blog->image) {
-            Storage::delete($blog->image);
+            File::delete($blog->image);
         }
 
         Blog::destroy($blog->id);

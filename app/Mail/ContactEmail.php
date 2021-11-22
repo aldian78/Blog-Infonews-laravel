@@ -31,6 +31,6 @@ class ContactEmail extends Mailable
     {
         return $this->from('projectsaya1997@gmail.com', 'InfoNews')
             ->subject('Response Contact')
-            ->markdown('email.contactEmail');
+            ->markdown('emails.contactEmail');
     }
 }

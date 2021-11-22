@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Waktu pembuatan: 22 Nov 2021 pada 13.58
+-- Waktu pembuatan: 22 Nov 2021 pada 14.45
 -- Versi server: 10.5.8-MariaDB-log
 -- Versi PHP: 7.4.15
 
@@ -297,6 +297,7 @@ INSERT INTO `users` (`id`, `name`, `username`, `email`, `email_verified_at`, `pa
 --
 
 CREATE TABLE `visitors` (
+  `id` int(11) NOT NULL,
   `visitor` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
   `hits` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -307,10 +308,8 @@ CREATE TABLE `visitors` (
 -- Dumping data untuk tabel `visitors`
 --
 
-INSERT INTO `visitors` (`visitor`, `hits`, `created_at`, `updated_at`) VALUES
-('127.0.0.1', 78, '2021-11-20 08:01:46', '2021-11-20 09:49:32'),
-('127.0.0.2', 1, '2021-11-20 09:23:32', '2021-11-20 09:23:32'),
-('127.0.0.3', 1, '2021-11-20 09:23:32', '2021-11-20 09:23:32');
+INSERT INTO `visitors` (`id`, `visitor`, `hits`, `created_at`, `updated_at`) VALUES
+(1, '127.0.0.1', 2, '2021-11-22 14:45:04', '2021-11-22 14:45:07');
 
 --
 -- Indexes for dumped tables
@@ -403,6 +402,12 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
+-- Indeks untuk tabel `visitors`
+--
+ALTER TABLE `visitors`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
@@ -471,6 +476,12 @@ ALTER TABLE `tags`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT untuk tabel `visitors`
+--
+ALTER TABLE `visitors`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
